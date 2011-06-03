@@ -1,9 +1,9 @@
+/**
+ * @context blogpost, page
+ */
 var $ = require('speakeasy/jquery').jQuery;
 
 var MAGIC_DELIMITOR = "pw3sx";
-var wikiCommentTemplate = AJS.template("{quote}{quoteText}{quote}\n{commentText} {anchorMacro}");
-var xhtmlCommentTemplate = AJS.template('<blockquote><p>{quoteText}</p></blockquote>' +
-                                        '<p>{commentText} <img class="editor-bodyless-macro" src="https://confxhtml.atlassian.com/plugins/servlet/macro/placeholder/anchor" macro-name="anchor" macro-default-parameter="{anchorValue}" /></p>');
 function submitComment(data) {
     var pageId = $('#pageId').val();
     var contextPath = $('#contextPath').val();
@@ -13,8 +13,8 @@ function submitComment(data) {
         type: 'post',
         url: contextPath + '/pages/doaddcomment.action?pageId=' + pageId,
         data: {
-            'content' : wikiCommentTemplate.fill(data),
-            'wysiwygContent' : xhtmlCommentTemplate.fill(data),
+            'content' : require('./wiki-comment').render(data),
+            'wysiwygContent' : require('./xhtml-comment').render(data),
             'atl_token' : token
         },
         success: function(response)
@@ -61,10 +61,10 @@ function handleSelection(selection) {
             "panel-body");
     dialog.addButton("Save", function (dialog) {
         submitComment({quoteText: selection, commentText: $('#inlineComment').val(), anchorValue : signature});
-        dialog.hide();
+        dialog.remove();
     });
     dialog.addButton("Cancel", function (dialog) {
-        dialog.hide();
+        dialog.remove();
     });
 
     dialog.show();

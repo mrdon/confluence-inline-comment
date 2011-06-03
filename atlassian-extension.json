@@ -1,7 +1,7 @@
 {
 	"key": 			"confluence-inline-comment",
-	"name":			"Confluence Inline Comment",
-	"description":	"Supports inline commenting by selecting text and pressing "SHIFT-C",
+	"name":			"Confluence Inline Commenting",
+	"description":	"Supports inline commenting by selecting text and pressing 'SHIFT-C'",
 	"version":		"2",
 	
 	"vendor": {	"name": "Don Brown",
